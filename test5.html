@@ -73,19 +73,27 @@
                     imgH = imgW / imgRatio;
                 }   
 
-                $('#myContainer').width(imgW);
-                $('#myContainer').height(imgH);
+                
 
-                if (resize) {                    
-                    stage.width(imgW);
-                    stage.height(imgH);
-                    picture.width(imgW);
-                    picture.height(imgH);
-                    /*picture.x(0);
-                    picture.y(0);*/
-                    stage.draw();                  
-                    /*console.log(dimRatioW +' | '+ dimRatioH);*/
-                } else {                    
+                if (resize) {              
+                    dimRatioW = $('#myContainer').width() / imgW;
+                    dimRatioH = $('#myContainer').height() / imgH;
+
+                    $('#myContainer').width(imgW);
+                    $('#myContainer').height(imgH);  
+                    stage.setWidth(imgW);
+                    stage.setHeight(imgH);
+                    
+                    picture.setWidth(imgW);
+                    picture.setHeight(imgH);
+
+                    picture.x(picture.x() / dimRatioW);
+                    picture.y(picture.y() / dimRatioH);
+                    /*stage.draw();*/                  
+                    console.log(picture.x() +' | '+ picture.y());
+                } else {     
+                    $('#myContainer').width(imgW);
+                    $('#myContainer').height(imgH);               
                     handlerDrawScene();
                 }                   
 

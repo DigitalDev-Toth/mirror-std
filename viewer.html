@@ -85,6 +85,7 @@
 					ctxRatioH = $('#myCanvas').height() / imgH;
 					$('#myCanvas').css('width',imgW +'px');
 					$('#myCanvas').css('height', imgH +'px');
+                    console.log(ctxRatioW +' | '+ ctxRatioH);
 					ctx.scale(ctxRatioW, ctxRatioH);
 				} else {
 					$('#myCanvas').css('width',imgW +'px');
