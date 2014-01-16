@@ -12,24 +12,26 @@
             var contW, contH, contPosX, contPosY, imgW, imgH, stage, layer, picture;
             var mouseX, mouseY, lastX, lastY = 0, lastOriginX, lastOriginY, lastScale;
             var resize = false;
+            var wasDragging = false;
 
             var zoom = {
                 stage: null,
                 picture: null,
+                layer: null,
                 scale: 1,
                 ratio: 1.01,
                 zoomEffect: function(event) {
                     event.preventDefault();
                     var evt = event.originalEvent;
-                    var mY = evt.offsetY;
+                    var mY = event.offsetY;
                     var delta = mY - lastY;
                     
                     var zoomRatio = (zoom.ratio - (delta < 0 ? 0 : 0.02));
                     var newScale = zoom.scale * zoomRatio;
-        
+                    
                     var originX = zoom.picture.x();
                     var originY = zoom.picture.y();
-                    /*console.log(zoom);*/
+
                     originX = mouseX - (mouseX - originX) * zoomRatio;
                     originY = mouseY - (mouseY - originY) * zoomRatio;
 
@@ -50,7 +52,7 @@
                 img = new Image;
                 img.src = 'img/1.3.51.0.7.1465996233.36248.17230.40441.29652.7180.31075.jpg';
                 img.onload = function () {  
-                    handlerContainerResize();                    
+                    handlerContainerResize();                   
                     
                     $(window).resize(function (event) {
                         resize = true;
@@ -89,8 +91,6 @@
 
                     picture.x(picture.x() / dimRatioW);
                     picture.y(picture.y() / dimRatioH);
-                    /*stage.draw();*/                  
-                    console.log(picture.x() +' | '+ picture.y());
                 } else {     
                     $('#myContainer').width(imgW);
                     $('#myContainer').height(imgH);               
@@ -113,7 +113,7 @@
                     height: imgH
                 });
 
-                layer = new Kinetic.Layer();
+                layer = zoom.layer = new Kinetic.Layer();
 
                 picture = zoom.picture = new Kinetic.Image({
                     image: img,
@@ -124,7 +124,7 @@
 
                 layer.on("mousedown", function (event) { 
                     if (event.which === 2) {
-                        layer.setDraggable(true);                       
+                                    
                     }   
                     if (event.which === 1) {
                         picture.brightness(1);
@@ -137,16 +137,23 @@
                     event.preventDefault();
                 });
 
-                $(stage.content).on('mousedown', function (event) {
-                    if (event.which === 3) {
-                        mouseX = event.clientX - $('#myContainer').offset().left;
-                        mouseY = event.clientY - $('#myContainer').offset().top;
-                        $(this).on('mousemove', zoom.zoomEffect);
-                    }                        
+                picture.on('mousedown', function (event) {
+                    switch (event.which) {
+                        case 1:
+                            break;
+                        case 2:
+                            this.setDraggable(true); 
+                            break;
+                        case 3:
+                            mouseX = event.clientX - $('#myContainer').offset().left;
+                            mouseY = event.clientY - $('#myContainer').offset().top;                      
+                            this.on('mousemove', zoom.zoomEffect);
+                            break;
+                    }                       
                 });
-                $(stage.content).on('mouseup', function (event) {  
-                    layer.setDraggable(false);                      
-                    $(this).unbind('mousemove');
+                picture.on('mouseup', function (event) {  
+                    this.setDraggable(false);                      
+                    this.off('mousemove');
                 });    
 
                 layer.add(picture);
