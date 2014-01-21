@@ -36,7 +36,7 @@
 				data[i] = 0;
 				data[i+1] = 0;
 				data[i+2] = 0;
-				/*data[i+3] = 0;*/	    		
+				data[i+3] = 0;	    		
 			} else {
 				data[i] += adjust;
 	    		data[i+1] += adjust;
