@@ -1,3 +1,4 @@
-viewer
+Mirror Estándar
 ======
-Viewer project
+Versión: develop<br />
+Propietario: Toth
