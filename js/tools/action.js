@@ -20,7 +20,8 @@ var action = {
                 handler.infoScene();
                 handler.infoTooSmall();
                 handler.progressbar(); 
-                handler.respScene();                
+                handler.respScene();  
+                handler.dontDiagnostic();
             } else {
                 if ($(window).width() >= $(window).height()) {
                     handler.orientation = 'landscape';
@@ -34,6 +35,7 @@ var action = {
                 handler.infoTooSmall();
                 handler.screenTooSmall();
                 handler.respScene();
+                handler.dontDiagnostic();
             }               
         }); 
 

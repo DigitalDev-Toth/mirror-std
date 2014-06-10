@@ -31,5 +31,6 @@ var lang = {
     ofImages: 'de',
     scale: 'Escala',
     brightness: 'Brillo',
-    contrast: 'Contraste'
+    contrast: 'Contraste',
+    msgDontDiagnostic: 'NO APTO PARA DIAGNÓSTICO'
 };

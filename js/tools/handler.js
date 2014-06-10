@@ -67,7 +67,8 @@ var handler = {
         t.infoTooSmall();
         t.screenTooSmall();
         t.configCanvas();
-        t.chargeSets();     
+        t.chargeSets(); 
+        t.dontDiagnostic();
     },
 
     workspace: function () {
@@ -107,6 +108,7 @@ var handler = {
                                         +'<p id="infoInstitutionName"></p>'
                                     +'</div>'
                                     +'<div id="scene" class="center-block"></div>'
+                                    +'<div id="dontDiagnostic">'+ lang.msgDontDiagnostic +'</div>'
                                     +'<div id="infoScene">'
                                         +'<p id ="infoScale"></p>'
                                         +'<p id ="infoBC"></p>'
@@ -177,6 +179,7 @@ var handler = {
                                         +'<p id="infoInstitutionName"></p>'
                                     +'</div>'
                                     +'<div id="scene" class="center-block"></div>'
+                                    +'<div id="dontDiagnostic">'+ lang.msgDontDiagnostic +'</div>'
                                     +'<div id="infoScene">'
                                         +'<p id ="infoScale"></p>'
                                         +'<p id ="infoBC"></p>'
@@ -372,6 +375,22 @@ var handler = {
                 'width': '200px',
                 'height': $(window).height() - 150
             });           
+        }
+    },
+    
+    dontDiagnostic: function () {
+        var t = this;
+        if (!t.mobileEnvironment.isMobile()) { 
+            $('#dontDiagnostic').css('top', $(window).height() - 30);
+        } else {
+            if (t.orientation === 'landscape') {
+                $('#dontDiagnostic').css({
+                    'top': $(window).height() - 30,
+                    'display': 'block'
+                });
+            } else {
+                $('#dontDiagnostic').css('display', 'none');
+            }
         }
     },
 
