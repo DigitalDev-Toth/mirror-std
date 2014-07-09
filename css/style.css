@@ -148,6 +148,12 @@ body {
 .modal-setlist {
     width: 250px;
 }
+#report-pdf {
+    width: 100%;
+}
+#reportMobile-pdf {
+    width: 100%;
+}
 /*.modal-report {
     width: 250px;
 }*/
