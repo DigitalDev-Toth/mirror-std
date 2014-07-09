@@ -1,6 +1,6 @@
 <?php
-    error_reporting(E_ALL ^ E_NOTICE);
-    ini_set('display_errors','On');
+    /*error_reporting(E_ALL ^ E_NOTICE);
+    ini_set('display_errors','On');*/
     include 'connect.php';
     
     function getDicomAttrs($tag, $dicomFile) {
@@ -38,22 +38,24 @@
             $series_name = "serie: $series_id";
         }
     
-        $sql = "SELECT pk, sop_iuid FROM instance WHERE series_fk=$series_id ORDER BY LPAD(inst_no,10,'0')";
+        $sql = "SELECT pk, sop_iuid FROM instance WHERE series_fk=$series_id AND inst_attrs NOT LIKE '%application/pdf%' ORDER BY LPAD(inst_no,10,'0')";
+        //$sql = "SELECT pk, sop_iuid, encode(inst_attrs::bytea, 'base64') FROM instance WHERE series_fk=$series_id ORDER BY LPAD(inst_no,10,'0')";
         $resultSeries = pg_query($dbconn , $sql) or die("SQL Error 1: " . pg_last_error());
         $j = 0;
         $url = "";
-        
+
         while ($data = pg_fetch_array($resultSeries, null, PGSQL_ASSOC)) {
             if ($j == 0) {
                 $sql2 = "SELECT filepath FROM files WHERE instance_fk=".$data['pk']." ORDER BY created_time";
                 $resultInstance = pg_query($dbconn , $sql2) or die("SQL Error 1: " . pg_last_error());
                 $dicomPath = pg_fetch_array($resultInstance, null, PGSQL_ASSOC);
-                $dicomImage = "/var/www/biopacs/pacs/dcm4chee/server/default/archive/".$dicomPath['filepath'];
+                $dicomImage = "/var/www/newbiopacs/pacs/dcm4chee/server/default/archive/".$dicomPath['filepath'];
                 $pixelSpacing = getDicomAttrs("0028,0030", $dicomImage);
+                echo $data['inst_attrs'];
             }
-        
+            
             $url = "&studyUID=$study_uid&seriesUID=$series_uid&objectUID=".$data['sop_iuid'];
-        
+            
             if ($j == 0) {
                 $url2 = $url;
             } else {
@@ -62,7 +64,13 @@
         
             $j++;
         }
-	
+
+        $sql = "SELECT pk, sop_iuid FROM instance WHERE series_fk=$series_id AND inst_attrs LIKE '%application/pdf%' ORDER BY LPAD(inst_no,10,'0')";
+        $resultReport = pg_query($dbconn , $sql) or die("SQL Error 1: " . pg_last_error());
+        while ($data = pg_fetch_array($resultReport, null, PGSQL_ASSOC)) {
+            $reportArr[] = "&studyUID=$study_uid&seriesUID=$series_uid&objectUID=".$data['sop_iuid'];
+        }
+        
         $studies[$i]['series'] = array(
             'name' => $series_name,
             'institution' => $series_institution,
@@ -72,7 +80,8 @@
             'series_desc' => $series_desc,
             'series_body_part' => $series_body_part,
             'url' => ($url2),
-            'pixelSpacing' => $pixelSpacing
+            'pixelSpacing' => $pixelSpacing,
+            'reports' => implode(',', $reportArr)
         );
         
         $i++;
