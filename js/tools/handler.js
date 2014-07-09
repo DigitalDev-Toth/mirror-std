@@ -144,7 +144,8 @@ var handler = {
                                             +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
                                             +'<h4 class="modal-title" id="myModalLabel1">'+ lang.titleReportModal +'</h4>'
                                         +'</div>'
-                                        +'<div class="modal-body">'                                        
+                                        +'<div class="modal-body">'  
+                                            +'<div id="report-pdf"></div>'                                        
                                         +'</div>'
                                     +'</div>'
                                 +'</div>'
@@ -216,7 +217,8 @@ var handler = {
                                             +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
                                             +'<h4 class="modal-title" id="myModalLabel1">'+ lang.titleReportModal +'</h4>'
                                         +'</div>'
-                                        +'<div class="modal-body">'                                        
+                                        +'<div class="modal-body">'  
+                                            +'<div id="reportMobile-pdf"></div>' 
                                         +'</div>'
                                     +'</div>'
                                 +'</div>'
@@ -260,7 +262,8 @@ var handler = {
             $('#areaMobile').css('float', '');
             $('#resetMobile').css('float', '');
             $('#infoMobile').css('float', '');
-            $('#reportMobile').css('float', '');            
+            $('#reportMobile').css('float', '');  
+            $('#reportMobile-pdf').css('height', ($(window).height() - 150) +'px');          
         } else {            
             $('.row').css('height', '50px');
             $('#contToolbox').removeClass('col-xs-1').addClass('col-xs-12');
@@ -292,6 +295,7 @@ var handler = {
             $('#resetMobile').css('float', 'left');
             $('#infoMobile').css('float', 'left');
             $('#reportMobile').css('float', 'left');
+            $('#reportMobile-pdf').css('height', ($(window).height() - 150) +'px');    
         }
     },
 
@@ -325,6 +329,7 @@ var handler = {
     toolbox: function () {
         var t = this;
         if (!t.mobileEnvironment.isMobile()) { 
+            $('#report-pdf').css('height', ($(window).height() - 200) +'px');
             $('#toolbox').css({
                 /*'width': $('.col-xs-2').width(),*/
                 'height': $(window).height()
@@ -400,8 +405,20 @@ var handler = {
         var setsModal = '';       
         for (var i = 0; i < t.records.length; i++) {            
             var d = t.records[i].series.url.split(',');
-            sets += '<a href="javascript: handler.loadSet('+ i +')"><img id="set'+ i +'" src="../wado.php?requestType=WADO'+ d[0] +'&columns=150" class="setBorder"  style="margin-top: 5px" /></a>';
-            setsModal += '<a href="javascript: handler.loadSet('+ i +')"><img id="setModal'+ i +'" src="../wado.php?requestType=WADO'+ d[0] +'&columns=150" class="setBorder" style="margin-top: 5px" /></a>';
+            var m = parseInt((d.length / 2).toFixed(0));
+            console.log(t.records[i]);
+
+            if (t.records[i].series.series_body_part != null) {
+                sets += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_body_part +'</p>';
+                setsModal += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_body_part +'</p>';
+            }
+            if (t.records[i].series.series_desc != null) {
+                sets += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_desc +'</p>';
+                setsModal += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_desc +'</p>';
+            }
+            
+            sets += '<p><a href="javascript: handler.loadSet('+ i +')"><img id="set'+ i +'" src="../wado.php?requestType=WADO'+ d[m] +'&columns=150" class="setBorder"  style="margin-bottom: 5px" /></a></p>';
+            setsModal += '<a href="javascript: handler.loadSet('+ i +')"><img id="setModal'+ i +'" src="../wado.php?requestType=WADO'+ d[m] +'&columns=150" class="setBorder" style="margin-bottom: 5px" /></a>';
         }
 
         $('#setlist').html(sets);
@@ -497,6 +514,15 @@ var handler = {
         $('#waitSetModal').height($('#setlistModal').height());
         $.post('php/studies.php', {pk: study}, function(data, textStatus, xhr) {
             t.records = eval('('+ data +')');
+
+            $('#report-pdf').css('height', ($(window).height() - 200) +'px');     
+            $('#reportMobile-pdf').css('height', ($(window).height() - 200) +'px');   
+
+            if (t.records[0].series.reports != null) {
+                $('#report-pdf').append('<iframe style="width: 100%; height: 100%" src="../wado.php?requestType=WADO'+ t.records[0].series.reports +'"></iframe>');
+                $('#reportMobile-pdf').append('<iframe style="width: 100%; height: 100%" src="../wado.php?requestType=WADO'+ t.records[0].series.reports +'"></iframe>');
+            }           
+
             var d = t.records[0].series.url.split(',');
             for (var i = 1; i <= d.length; i++) {
                 t.sources[i] = d[i - 1];
@@ -518,14 +544,23 @@ var handler = {
             t.pixelSpacing = ps.split('\\');
             t.pixelSpacing[0] = parseFloat(t.pixelSpacing[0]);
             t.pixelSpacing[1] = parseFloat(t.pixelSpacing[1]);
-            $('#infoPatientName').html(lang.patientName +': '+ t.records[0].series.patient_name);
-            $('#infoPatientId').html(lang.patientAge +': '+ t.records[0].series.patient_rut);
-            if (t.records[0].series.patient_sex === 'M') {
-                $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientMale);
-            } else {
-                $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientFemale);
+            if (t.records[0].series.patient_name != null) {
+                $('#infoPatientName').html(lang.patientName +': '+ t.records[0].series.patient_name);
             }
-            $('#infoInstitutionName').html(lang.institution +': '+t.records[0].series.institution);
+            if (t.records[0].series.patient_rut != null) {
+                $('#infoPatientId').html(lang.patientAge +': '+ t.records[0].series.patient_rut);
+            }
+            if (t.records[0].series.patient_sex != null) {
+                if (t.records[0].series.patient_sex === 'M') {
+                    $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientMale);
+                } else {
+                    $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientFemale);
+                }
+            }
+            if (t.records[0].series.institution != null) {
+                $('#infoInstitutionName').html(lang.institution +': '+t.records[0].series.institution);
+            }       
+            
             t.sets();
             $('.setBorder').css('border', '2px solid rgb(68, 68, 68)');
             $('#set0').css('border', '2px solid #f69322');
@@ -576,14 +611,22 @@ var handler = {
             t.pixelSpacing = ps.split('\\');
             t.pixelSpacing[0] = parseFloat(t.pixelSpacing[0]);
             t.pixelSpacing[1] = parseFloat(t.pixelSpacing[1]);
-            $('#infoPatientName').html(lang.patientName +': '+ t.records[0].series.patient_name);
-            $('#infoPatientId').html(lang.patientAge +': '+ t.records[0].series.patient_rut);
-            if (t.records[0].series.patient_sex === 'M') {
-                $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientMale);
-            } else {
-                $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientFemale);
+            if (t.records[0].series.patient_name != null) {
+                $('#infoPatientName').html(lang.patientName +': '+ t.records[0].series.patient_name);
             }
-            $('#infoInstitutionName').html(lang.institution +': '+t.records[0].series.institution);
+            if (t.records[0].series.patient_rut != null) {
+                $('#infoPatientId').html(lang.patientAge +': '+ t.records[0].series.patient_rut);
+            }
+            if (t.records[0].series.patient_sex != null) {
+                if (t.records[0].series.patient_sex === 'M') {
+                    $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientMale);
+                } else {
+                    $('#infoPatientSex').html(lang.patientSex +': '+ lang.patientFemale);
+                }
+            }
+            if (t.records[0].series.institution != null) {
+                $('#infoInstitutionName').html(lang.institution +': '+t.records[0].series.institution);
+            } 
             t.numImages = 0;
             t.countImages = 0;
             t.numImg = 1;            
