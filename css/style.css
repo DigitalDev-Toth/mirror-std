@@ -44,6 +44,13 @@ body {
     overflow: hidden;
     float: none;
 }
+#dontDiagnostic {
+    position: absolute;
+    top: 500px;
+    left: 0px;
+    color: red;
+    z-index: 200;
+}
 #myCanvas {
     position: absolute;
     top: 0px;
