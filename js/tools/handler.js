@@ -421,7 +421,7 @@ var handler = {
             }
             
             sets += '<p><a href="javascript: handler.loadSet('+ i +')"><img id="set'+ i +'" src="../wado.php?requestType=WADO'+ d[m] +'&columns=150" class="setBorder"  style="margin-bottom: 5px" /></a></p>';
-            setsModal += '<a href="javascript: handler.loadSet('+ i +')"><img id="setModal'+ i +'" src="../wado.php?requestType=WADO'+ d[m] +'&columns=150" class="setBorder" style="margin-bottom: 5px" /></a>';
+            setsModal += '<p><a href="javascript: handler.loadSet('+ i +')"><img id="setModal'+ i +'" src="../wado.php?requestType=WADO'+ d[m] +'&columns=150" class="setBorder" style="margin-bottom: 5px" /></a></p>';
         }
 
         $('#setlist').html(sets);
