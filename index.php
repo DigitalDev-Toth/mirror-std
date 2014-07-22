@@ -11,14 +11,14 @@
         <script src="js/libs/jquery.mousewheel.js"></script>
         <script src="js/libs/hammer.min.js"></script>
         <script src="js/libs/bootstrap.min.js"></script>
-        <script src="js/tools/action.js"></script>
-        <script src="js/tools/handler.js"></script>
-        <script src="js/tools/zoom.js"></script>
-        <script src="js/tools/drag.js"></script>
-        <script src="js/tools/filter.js"></script>
-        <script src="js/tools/animation.js"></script>
-        <script src="js/tools/measuring.js"></script>
-        <script src="js/tools/langES.js"></script>
+        <script src="js/tools/action.min.js"></script>
+        <script src="js/tools/handler.min.js"></script>
+        <script src="js/tools/zoom.min.js"></script>
+        <script src="js/tools/drag.min.js"></script>
+        <script src="js/tools/filter.min.js"></script>
+        <script src="js/tools/animation,min.js"></script>
+        <script src="js/tools/measuring.min.js"></script>
+        <script src="js/tools/langES.min.js"></script>
         <script type="text/javascript">          
             
             var study = '28242'; //28367, 28242, 28437, 28646, 28661
