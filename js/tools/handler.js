@@ -405,14 +405,18 @@ var handler = {
         var setsModal = '';       
         for (var i = 0; i < t.records.length; i++) {            
             var d = t.records[i].series.url.split(',');
-            var m = parseInt((d.length / 2).toFixed(0));
-            console.log(t.records[i]);
+            if (d.length === 1) {
+                var m = 0;
+            } else {
+                var m = parseInt((d.length / 2).toFixed(0));
+            }            
+            console.log(t.records[i], d[0], d.length);
 
-            if (t.records[i].series.series_body_part != null) {
+            if (t.records[i].series.series_body_part !== null) {
                 sets += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_body_part +'</p>';
                 setsModal += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_body_part +'</p>';
             }
-            if (t.records[i].series.series_desc != null) {
+            if (t.records[i].series.series_desc !== null) {
                 sets += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_desc +'</p>';
                 setsModal += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_desc +'</p>';
             }
