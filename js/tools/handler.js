@@ -410,7 +410,6 @@ var handler = {
             } else {
                 var m = parseInt((d.length / 2).toFixed(0));
             }            
-            console.log(t.records[i], d[0], d.length);
 
             if (t.records[i].series.series_body_part !== null) {
                 sets += '<p style="font-size: 10px; color: #fff">'+ t.records[i].series.series_body_part +'</p>';
