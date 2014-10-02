@@ -76,7 +76,7 @@ var zoom = {
             ctx.clearRect(0, 0, c.width, c.height);
             var x = event.clientX - $(this).offset().left;
             var y = event.clientY - $(this).offset().top;
-            if (handler.detectBrowser.isFirefox() || handler.detectBrowser.isMSIE()) {
+//            if (handler.detectBrowser.isFirefox() || handler.detectBrowser.isMSIE()) {
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(x, y, 180, 0, Math.PI * 2, true);
@@ -88,17 +88,17 @@ var zoom = {
                 ctx.clip();
                 ctx.drawImage(handler.canvas, -x * 2, -y * 2, $('#myCanvas').width() * 3, $('#myCanvas').height() * 3);
                 ctx.restore();
-            } else {
-                ctx.drawImage(handler.canvas, -x * 2, -y * 2, $('#myCanvas').width() * 3, $('#myCanvas').height() * 3);  
-                ctx.globalCompositeOperation = 'destination-atop';       
-                ctx.fillStyle = "#fff";
-                ctx.beginPath();
-                ctx.arc(x, y, 180, 0, Math.PI * 2, true);
-                ctx.fill();
-                ctx.lineWidth = 10;
-                ctx.strokeStyle = '#d58512';
-                ctx.stroke();  
-            }      
+//            } else {
+//                ctx.drawImage(handler.canvas, -x * 2, -y * 2, $('#myCanvas').width() * 3, $('#myCanvas').height() * 3);  
+//                ctx.globalCompositeOperation = 'destination-atop';       
+//                ctx.fillStyle = "#fff";
+//                ctx.beginPath();
+//                ctx.arc(x, y, 180, 0, Math.PI * 2, true);
+//                ctx.fill();
+//                ctx.lineWidth = 10;
+//                ctx.strokeStyle = '#d58512';
+//                ctx.stroke();  
+//            }      
         });
     }
 };
