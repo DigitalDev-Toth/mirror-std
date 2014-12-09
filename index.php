@@ -18,7 +18,7 @@
         <script src="js/tools/filter.min.js"></script>
         <script src="js/tools/animation,min.js"></script>
         <script src="js/tools/measuring.min.js"></script>
-        <script src="js/tools/langES.min.js"></script>
+        <script src="js/tools/langES.js"></script>
         <script type="text/javascript">          
             
             var study = '28242'; //28367, 28242, 28437, 28646, 28661
