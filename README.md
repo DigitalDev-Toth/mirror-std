@@ -1,7 +1,7 @@
 Mirror Estándar
 ======
 Versión: develop<br />
-Revisión: r03<br />
+Revisión: r04<br />
 Propietario: Toth
 
 <strong>Log</strong>: <br />
@@ -11,4 +11,8 @@ Propietario: Toth
 <li>- Mostrar una imagen del medio del set como thumbnail</li><br />
 <li>- Agregar informe (report) en pdf</li><br /><br />
 22/07/2014<br />
-<li>- Corrección de caso de sets con una imagen</li><br />
+<li>- Corrección de caso de sets con una imagen</li><br /><br />
+09/12/2014<br />
+<li>- Corrección de lupa para chrome</li><br />
+<li>- Corrección de brillo, ahora aumenta hasta 7.16</li><br />
+

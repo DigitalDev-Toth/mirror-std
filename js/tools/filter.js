@@ -16,7 +16,7 @@ var filter = {
 
         handler.ba += mY - handler.mClickPos.y;	
         handler.c += (mX - handler.mClickPos.x) / 100; 	
-        handler.b = 1 + Math.min(150, Math.max(-150, handler.ba)) / 150;
+        handler.b = 1 + Math.min(1000, Math.max(-150, handler.ba)) / 150;
         handler.c = Math.max(1, Math.min(handler.c, 10));
 
         $('#infoBC').html(lang.brightness +': '+ handler.b.toFixed(2) +' '+ lang.contrast +': '+ handler.c.toFixed(2));
