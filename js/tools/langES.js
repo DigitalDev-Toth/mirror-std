@@ -19,6 +19,8 @@ var lang = {
     buttonInfo: 'Información',
     buttonReport: 'Informe',
     buttonSets: 'Series',
+    buttonClose: 'Cerrar Estudio',
+    buttonSend: 'Enviar',
     titleSetsModal: 'Series',
     titleReportModal: 'Informe',
     patientName: 'Nombre',
