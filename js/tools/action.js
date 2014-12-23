@@ -632,5 +632,9 @@ var action = {
         $(window).bind('touchmove', function (event) {
             event.preventDefault();
         });
+
+        $('#close').on('click', function (event) {
+            window.close();
+        });
     }
 };

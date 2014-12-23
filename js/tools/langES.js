@@ -23,6 +23,7 @@ var lang = {
     buttonSend: 'Enviar',
     titleSetsModal: 'Series',
     titleReportModal: 'Informe',
+    titleSendModal: 'Envio Estudio',
     patientName: 'Nombre',
     patientAge: 'Edad/Rut',
     patientSex: 'Sexo',
