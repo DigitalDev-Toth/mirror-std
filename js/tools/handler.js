@@ -161,7 +161,7 @@ var handler = {
                                             +'<h4 class="modal-title" id="myModalLabel1">'+ lang.titleSendModal +'</h4>'
                                         +'</div>'
                                         +'<div class="modal-body">'  
-                                            +'<div id="sendForm"><iframe id="sendFrame" src="php/send.php?study='+study+'" width="100% height="100%" frameborder="0"></iframe></div>'                                        
+                                            +'<div id="sendForm"><iframe id="sendFrame" src="php/send.php?study='+study+'" width="100%" height="300" frameborder="0"></iframe></div>'                                        
                                         +'</div>'
                                     +'</div>'
                                 +'</div>'
