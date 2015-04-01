@@ -21,7 +21,7 @@
         <script src="js/tools/langES.js"></script>
         <script type="text/javascript">          
             
-            var study = '28242'; //28367, 28242, 28437, 28646, 28661
+            var study = '28242'; //28367, 28242, 28437, 28646, 28661 ahora si ctm (soy la susana)
             
             $(function () {  
                 action.init();                
